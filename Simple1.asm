@@ -32,9 +32,17 @@ test	movwf	0x06, ACCESS	    ; Test for end of loop condition
 	
 	; a delay subroutine
 delay	decfsz	0x20
+	
+	movlw	0x05
+	movwf	0x30, ACCESS
+	
+	call extra_delay
 	bra delay
 	return
 	
+extra_delay decfsz  0x30
+	    bra extra_delay
+	    return
 	
 	goto 	0x0		    ; Re-run program from start
 	
