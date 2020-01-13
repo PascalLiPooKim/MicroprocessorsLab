@@ -13,9 +13,29 @@ start
 loop	movff 	0x06, PORTB
 	incf 	0x06, W, ACCESS
 test	movwf	0x06, ACCESS	    ; Test for end of loop condition
+	
+	
+	; delay speed of counter
+	movlw	0x10
+	movwf	0x20, ACCESS
+	call	delay
+	
+	
 	movlw 	0x63
 	cpfsgt 	0x06, ACCESS
-	bra 	loop		    ; Not yet finished goto start of loop again
+	bra 	loop
+	
+	
+	
+	
+			    ; Not yet finished goto start of loop again
+	
+	; a delay subroutine
+delay	decfsz	0x20
+	bra delay
+	return
+	
+	
 	goto 	0x0		    ; Re-run program from start
 	
 	end
